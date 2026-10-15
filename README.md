@@ -1,162 +1,134 @@
 # Grant Application Completeness Assistant
 
-An AI-assisted web application that helps reviewers assess whether a grant application addresses the requirements described in grant guidelines. It highlights requirement-level evidence and supports human review of the assessment.
+An AI-assisted web application that helps grant reviewers evaluate whether an application addresses the requirements specified in grant guidelines. The application uses Google Gemini to generate requirement-level assessments and highlight supporting evidence for human review.
 
 ## Features
 
-- **Document upload:** Upload guideline and application documents through the application.
-- **AI-assisted assessment:** Uses the Google Gemini API to evaluate application content against grant requirements.
-- **Requirement-level results:** Displays assessment results for individual requirements.
-- **Evidence review:** Presents supporting text to help reviewers verify the assessment.
-- **Human review controls:** Supports confirming, correcting, or rejecting assessment results.
-- **Error handling:** Displays errors when document uploads or assessment requests fail.
+- **Document Upload:** Upload grant guidelines and application documents for assessment.
+- **AI-Assisted Assessment:** Use Google Gemini to compare application content against grant requirements.
+- **Requirement-Level Results:** Review findings for individual requirements.
+- **Evidence Review:** Examine supporting evidence to help verify assessment results.
+- **Human Review:** Review and validate AI-generated findings before making decisions.
+- **Error Handling:** Receive feedback when document uploads or assessment requests fail.
 
-## Tech Stack
+## Technology Stack
 
-### Frontend
+**Frontend**
 - React
 - Vite
 - JavaScript
 - CSS
 
-### Backend
+**Backend**
 - Node.js
 - Express.js
-- Multer for handling document uploads
-- Google Gemini API using the `@google/genai` SDK
+- Multer
+- Google Gemini API
+- `@google/genai`
 
 ## Project Structure
 
 ```text
 grant-assistant/
-├── client/                 # React frontend
+├── Client/
+│   ├── public/
 │   ├── src/
 │   ├── package.json
-│   └── ...
-├── Server/                 # Express backend
+│   └── vite.config.js
+├── Server/
 │   ├── routes/
 │   ├── services/
-│   ├── .env                # Local environment variables
 │   ├── server.js
 │   └── package.json
 ├── .gitignore
 └── README.md
 ```
 
-*The structure above is illustrative. Adjust the filenames if your actual project differs.*
+## Getting Started
 
-## Prerequisites
+### Prerequisites
 
 - Node.js and npm
 - A Google Gemini API key
-- Git (optional)
 
-## Getting Started
-
-### 1. Clone or download the project
-
-If the project is hosted in a Git repository:
+### 1. Clone the Repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
-cd grant-assistant
+git clone https://github.com/NandanaRatnakaran123/Grant_Application_Completeness_Assistant.git
+cd Grant_Application_Completeness_Assistant
 ```
 
-Alternatively, open your downloaded project folder in your code editor.
+### 2. Configure the Backend
 
-### 2. Configure the backend
-
-Open a terminal in the `Server` directory:
+Open a terminal in the backend directory:
 
 ```bash
 cd Server
 npm install
 ```
 
-Create a `.env` file inside `Server/` with the following variables:
+Create a `.env` file inside `Server/` with the following configuration:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
 GEMINI_MODEL=gemini-3.5-flash-lite
 ```
 
-Replace `your_gemini_api_key` with your own API key. Never publish your real API key or commit the `.env` file.
+Replace `your_gemini_api_key` with your own Gemini API key. Keep this key private and never commit your `.env` file to GitHub.
 
-Start the backend using the script defined in `Server/package.json`. For example, if your project has a `dev` script:
+Start the backend using the development script configured in `Server/package.json`:
 
 ```bash
 npm run dev
 ```
 
-The backend should start on port `5000`, if configured as in this project.
+The backend is configured to run on port `5000` in the local development environment.
 
-### 3. Configure the frontend
+### 3. Configure the Frontend
 
 Open a second terminal in the project root:
 
 ```bash
-cd client
+cd Client
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite in your terminal, typically `http://localhost:5173`.
+Open the local URL displayed in the terminal by Vite.
 
-Keep both the frontend and backend running while testing the application.
+Keep the backend running while using the frontend.
 
 ## How to Use
 
 1. Open the application in your browser.
 2. Upload the grant guideline document.
 3. Upload the grant application document.
-4. Start the assessment.
-5. Review the requirement-level results and supporting evidence.
-6. Use the available review controls to confirm, correct, or reject results.
-7. Independently verify important findings against the original documents.
+4. Run the assessment.
+5. Review the requirement-level findings and supporting evidence.
+6. Verify the findings against the original documents before relying on the results.
 
-## API Configuration
+## API Endpoints
 
-The frontend communicates with the backend through the configured API base URL:
+The backend exposes the following API endpoints:
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | `/api/documents/upload` | Upload a document for processing |
+| POST | `/api/assessments` | Request an assessment |
+
+The frontend communicates with the backend through the configured API base URL. In local development, this is:
 
 ```text
 http://localhost:5000/api
 ```
 
-The assessment endpoint is:
+The Gemini API key is used by the backend and must not be exposed in frontend code.
 
-```text
-POST /api/assessments
-```
+## Project Status
 
-It accepts `guidelineText` and `applicationText` in the request body and returns the assessment result.
+This project is a prototype demonstrating how AI can assist with grant application completeness review while keeping human verification part of the process.
 
-The document upload endpoint is:
+## Notes
 
-```text
-POST /api/documents/upload
-```
-
-The backend is responsible for communicating with the Gemini API. The Gemini API key must remain on the backend and must not be exposed in frontend code.
-
-## Limitations and Responsible Use
-
-- AI-generated assessments may be incomplete, incorrect, or misleading.
-- Supporting evidence and requirement matches must be checked against the original documents.
-- The application is an assistance tool, not a substitute for grant reviewers or official eligibility decisions.
-- Results depend on document extraction quality, the supplied guidelines, and the AI model's output.
-- The application should not be used to make final funding decisions without appropriate human review.
-
-## Security
-
-- Store API credentials in server-side environment variables.
-- Exclude `.env` files from version control.
-- Do not upload confidential grant documents to services unless their use is authorized and consistent with applicable privacy requirements.
-- Validate uploaded files and enforce appropriate file size and type limits.
-
-## Development Status
-
-This project is intended as a prototype for AI-assisted grant application completeness review. Features and behavior may change during development.
-
-## License
-
-No license has been specified yet. Add an appropriate license before distributing the project publicly.
+- AI-generated assessments should be verified against the original documents.
+- The Gemini API key is configured through server-side environment variables and must not be committed to version control.
