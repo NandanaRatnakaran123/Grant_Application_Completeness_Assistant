@@ -1,5 +1,4 @@
-
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL ="https://grant-application-completeness-assistant-oz0b.onrender.com/api";
 
 export async function uploadDocument(file) {
   const formData = new FormData();
